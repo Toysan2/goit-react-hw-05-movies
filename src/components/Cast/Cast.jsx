@@ -21,10 +21,7 @@ const Cast = () => {
               alt={member.name}
             />
           ) : (
-            <img
-              src="/path/to/default/image.jpg" // Ścieżka do domyślnego obrazu
-              alt="Default"
-            />
+            <img src="/path/to/default/image.jpg" alt="Default" />
           )}
           <p>{member.name}</p>
         </div>
