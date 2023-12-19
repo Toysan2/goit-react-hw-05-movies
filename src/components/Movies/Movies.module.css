@@ -1,21 +1,51 @@
-/* Movies.module.css */
-.moviesContainer {
-    padding: 20px;
+.container {
+  padding: 20px;
 }
 
-.movieList {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+form {
+  margin-bottom: 20px;
 }
 
-.movieItem {
-    flex: 0 1 200px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 4px;
-    background-color: #f0f0f0;
+input {
+  padding: 10px;
+  margin-right: 10px;
+  width: 70%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+li:last-child {
+  margin-bottom: 0;
+}
+.navbar {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  margin-bottom: 20px;
 }

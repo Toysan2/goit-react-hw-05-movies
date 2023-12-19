@@ -1,28 +1,11 @@
-/* Reviews.module.css */
-.reviewsContainer {
-    margin: 20px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #f9f9f9;
+.container {
+  padding: 20px;
 }
 
-.reviewList {
-    list-style: none;
-    padding: 0;
+.review {
+  margin-bottom: 20px;
 }
 
-.reviewItem {
-    margin-bottom: 15px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-}
-
-.reviewAuthor {
-    font-weight: bold;
-}
-
-.reviewContent {
-    font-size: 14px;
-    color: #555;
+.review h3 {
+  margin-bottom: 5px;
 }

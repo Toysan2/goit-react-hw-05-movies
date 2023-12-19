@@ -1,19 +1,15 @@
-/* Cast.module.css */
-.castContainer {
-    margin: 20px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #f9f9f9;
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-.castList {
-    list-style: none;
-    padding: 0;
+.castMember {
+  text-align: center;
 }
 
-.castItem {
-    margin-bottom: 10px;
-    font-size: 16px;
-    color: #333;
+.castMember img {
+  width: 100px;
+  height: auto;
+  border-radius: 50%;
 }

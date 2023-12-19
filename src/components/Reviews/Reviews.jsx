@@ -1,28 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { getMovieReviews } from '../services/movieService';
+import { useParams } from 'react-router-dom';
+import { fetchMovieReviews } from '../api/movieAPI';
 import styles from './Reviews.module.css';
 
-const Reviews = ({ movieId }) => {
+const Reviews = () => {
+  const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    getMovieReviews(movieId).then(data => setReviews(data.results));
+    fetchMovieReviews(movieId).then(data => setReviews(data.results));
   }, [movieId]);
+
+  if (reviews.length === 0) {
+    return (
+      <div className={styles.container}>
+        We don't have any reviews for this movie.
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
-      <h2>Recenzje</h2>
-      {reviews.length > 0 ? (
-        <ul>
-          {reviews.map(review => (
-            <li key={review.id}>
-              <strong>{review.author}</strong>: {review.content}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Brak recenzji dla tego filmu.</p>
-      )}
+      {reviews.map(review => (
+        <div key={review.id} className={styles.review}>
+          <h3>{review.author}</h3>
+          <p>{review.content}</p>
+        </div>
+      ))}
     </div>
   );
 };

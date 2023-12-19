@@ -1,20 +1,40 @@
+// Home.jsx
 import React, { useEffect, useState } from 'react';
-import { getTrendingMovies } from '../services/movieService';
+import { Link } from 'react-router-dom';
+import { fetchTrendingMovies } from '../api/movieAPI';
 import styles from './Home.module.css';
 
 const Home = () => {
-  const [movies, setMovies] = useState([]);
+  const [trendingMovies, setTrendingMovies] = useState([]);
 
   useEffect(() => {
-    getTrendingMovies().then(data => setMovies(data.results));
+    const loadTrendingMovies = async () => {
+      try {
+        const data = await fetchTrendingMovies();
+        setTrendingMovies(data.results);
+      } catch (error) {
+        console.error('Error fetching trending movies:', error);
+      }
+    };
+
+    loadTrendingMovies();
   }, []);
 
   return (
     <div className={styles.container}>
-      <h1>Popularne Filmy</h1>
+      <nav className={styles.navbar}>
+        <Link to="/">Home</Link>
+        <Link to="/movies">Movies</Link>
+      </nav>
+
+      <h1>Trendujące Filmy</h1>
       <ul>
-        {movies.map(movie => (
-          <li key={movie.id}>{movie.title}</li>
+        {trendingMovies.map(movie => (
+          <li key={movie.id}>
+            <Link to={`/movies/${movie.id}`}>
+              {movie.title} ({new Date(movie.release_date).getFullYear()})
+            </Link>
+          </li>
         ))}
       </ul>
     </div>

@@ -1,22 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { getMovieCast } from '../services/movieService';
+import { useParams } from 'react-router-dom';
+import { fetchMovieCast } from '../api/movieAPI';
 import styles from './Cast.module.css';
 
-const Cast = ({ movieId }) => {
+const Cast = () => {
+  const { movieId } = useParams();
   const [cast, setCast] = useState([]);
 
   useEffect(() => {
-    getMovieCast(movieId).then(data => setCast(data.cast));
+    fetchMovieCast(movieId).then(data => setCast(data.cast));
   }, [movieId]);
 
   return (
     <div className={styles.container}>
-      <h2>Obsada</h2>
-      <ul>
-        {cast.map(member => (
-          <li key={member.cast_id}>{member.name}</li>
-        ))}
-      </ul>
+      {cast.map(member => (
+        <div key={member.cast_id} className={styles.castMember}>
+          {member.profile_path ? (
+            <img
+              src={`https://image.tmdb.org/t/p/w500${member.profile_path}`}
+              alt={member.name}
+            />
+          ) : (
+            <img
+              src="/path/to/default/image.jpg" // Ścieżka do domyślnego obrazu
+              alt="Default"
+            />
+          )}
+          <p>{member.name}</p>
+        </div>
+      ))}
     </div>
   );
 };
