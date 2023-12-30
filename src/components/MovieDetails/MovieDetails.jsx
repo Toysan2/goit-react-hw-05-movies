@@ -1,24 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, Outlet } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { fetchMovieDetails } from '../api/movieAPI';
-import styles from './MovieDetails.module.css';
+import Reviews from '../Reviews/Reviews';
+import Cast from '../Cast/Cast';
+import styles from '../SharedLayout/SharedLayout.module.css';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
+  const [showReviews, setShowReviews] = useState(false);
+  const [showCast, setShowCast] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchMovieDetails(movieId).then(setMovie);
   }, [movieId]);
 
+  const handleGoBack = () => navigate(-1);
+  const toggleReviews = () => setShowReviews(!showReviews);
+  const toggleCast = () => setShowCast(!showCast);
+
   if (!movie) return <div>Loading...</div>;
 
   return (
     <div className={styles.container}>
-      <nav className={styles.navbar}>
-        <Link to="/">Home</Link>
-        <Link to="/movies">Movies</Link>
-      </nav>
+      <button onClick={handleGoBack}>Go back</button>
       <h1>{movie.title}</h1>
       <img
         src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
@@ -35,11 +41,10 @@ const MovieDetails = () => {
         {movie.genres.map(genre => genre.name).join(', ')}
       </p>
       <h2>Additional Informations</h2>
-      <div>
-        <Link to={`/movies/${movieId}/reviews`}>Reviews</Link>
-        <Link to={`/movies/${movieId}/cast`}>Cast</Link>
-      </div>
-      <Outlet /> {/* Miejsce na renderowanie komponentów Cast i Reviews */}
+      <button onClick={toggleReviews} style={{ marginRight: '20px' }}>Reviews</button>
+      {showReviews && <Reviews movieId={movieId} />}
+      <button onClick={toggleCast}>Cast</button>
+      {showCast && <Cast movieId={movieId} />}
     </div>
   );
 };

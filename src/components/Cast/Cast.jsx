@@ -11,6 +11,11 @@ const Cast = () => {
     fetchMovieCast(movieId).then(data => setCast(data.cast));
   }, [movieId]);
 
+  // Sprawdzanie, czy obsada jest pusta
+  if (cast.length === 0) {
+    return <div className={styles.container}>Sorry, We do not know the cast yet.</div>;
+  }
+
   return (
     <div className={styles.container}>
       {cast.map(member => (

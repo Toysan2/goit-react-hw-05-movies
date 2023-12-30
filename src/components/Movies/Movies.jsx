@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { searchMovies } from '../api/movieAPI';
-import styles from './Movies.module.css';
+import styles from '../SharedLayout/SharedLayout.module.css';
 
 const Movies = () => {
   const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    // Odczytywanie wyników wyszukiwania z sessionStorage przy inicjalizacji
+    const savedResults = sessionStorage.getItem('searchResults');
+    if (savedResults) {
+      setMovies(JSON.parse(savedResults));
+    }
+  }, []);
 
   const handleSearch = async event => {
     event.preventDefault();
@@ -16,6 +24,8 @@ const Movies = () => {
     try {
       const data = await searchMovies(query);
       setMovies(data.results);
+      // Zapisywanie wyników wyszukiwania do sessionStorage
+      sessionStorage.setItem('searchResults', JSON.stringify(data.results));
     } catch (error) {
       console.error('Error fetching movies:', error);
     } finally {
@@ -25,11 +35,6 @@ const Movies = () => {
 
   return (
     <div className={styles.container}>
-      <nav className={styles.navbar}>
-        <Link to="/">Home</Link>
-        <Link to="/movies">Movies</Link>
-      </nav>
-
       <form onSubmit={handleSearch}>
         <input
           type="text"
